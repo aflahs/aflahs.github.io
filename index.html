@@ -10,6 +10,15 @@
     
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <style>
+        /* --- FIX: PREVENT PAGE JUMP ON REFRESH --- */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Lock the viewport */
+        }
+
         * {
             box-sizing: border-box;
             cursor: none; /* Hide default cursor */
@@ -17,14 +26,12 @@
 
         body {
             background-color: #101010; 
-            font-family: Montserrat, sans-serif; /* Main font applied here */
+            font-family: Montserrat, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden; 
+            /* perspective triggers the 3D effect, but can cause visual jumps if html isn't locked */
             perspective: 1000px; 
         }
 
@@ -166,7 +173,6 @@
             border-radius: 10px;
             padding: 5px 10px;
             pointer-events: none; 
-            /* Font inherits from parent .hover-text */
         }
 
         #fade {
@@ -182,9 +188,8 @@
             position: relative;
             display: inline-block;
             margin: 10px;
-            /* CHANGED FONT HERE to match Body */
             font-family: Montserrat, sans-serif; 
-            font-weight: 400; /* Adjusted weight for better readability */
+            font-weight: 400; 
             text-align: center;
             text-decoration: none; 
             color: inherit;
@@ -251,6 +256,13 @@
     </div>
 
     <script>
+        // --- FIX: STOP BROWSER SCROLL RESTORATION ---
+        // This tells the browser: "Don't remember where I scrolled, always start at the top."
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0,0);
+
         const cursor = document.getElementById('cursor');
 
         // Global coordinates so the loop knows where the mouse is
@@ -311,7 +323,7 @@
             };
         }
 
-        // Add Hover Effects (REDUCED SCALE to 1.2)
+        // Add Hover Effects
         const interactiveElements = document.querySelectorAll('button, a');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
