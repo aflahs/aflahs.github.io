@@ -11,18 +11,17 @@
     
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <style>
-        /* --- FIX: PREVENT PAGE JUMP ON REFRESH --- */
         html, body {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Lock the viewport */
+            overflow: hidden; 
         }
 
         * {
             box-sizing: border-box;
-            cursor: none; /* Hide default cursor */
+            cursor: none; 
         }
 
         body {
@@ -32,11 +31,9 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            /* perspective triggers the 3D effect, but can cause visual jumps if html isn't locked */
             perspective: 1000px; 
         }
 
-        /* --- 1. SHARP ARROW CURSOR --- */
         #cursor {
             position: fixed;
             top: 0;
@@ -53,7 +50,6 @@
             transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
 
-        /* --- 2. SIZZLING PARTICLE STYLES --- */
         .particle {
             position: fixed;
             pointer-events: none;
@@ -223,7 +219,7 @@
         
         <div class="buttons">
             <button class="primary" onclick="window.open('https://github.com/aflahs', '_blank')">Projects</button>
-            <button class="primary ghost">Certificates</button>
+            <button class="primary ghost" onclick="window.open('https://www.coursera.org/user/2455147e88660f6c2f9c61f2521484e2', '_blank')">Certificates</button>
         </div>
         
         <div class="icons">
@@ -257,8 +253,6 @@
     </div>
 
     <script>
-        // --- FIX: STOP BROWSER SCROLL RESTORATION ---
-        // This tells the browser: "Don't remember where I scrolled, always start at the top."
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
@@ -266,22 +260,19 @@
 
         const cursor = document.getElementById('cursor');
 
-        // Global coordinates so the loop knows where the mouse is
-        let mouseX = -100; // Start off screen
+        let mouseX = -100; 
         let mouseY = -100;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
 
-            // Update Cursor Position
             cursor.style.left = mouseX + 'px';
             cursor.style.top = mouseY + 'px';
         });
 
-        // Loop to create continuous sizzle
         setInterval(() => {
-            if (mouseX > 0) { // Only sizzle if mouse is on screen
+            if (mouseX > 0) { 
                 createSizzle(mouseX, mouseY);
             }
         }, 30);
@@ -291,20 +282,16 @@
             particle.classList.add('particle');
             document.body.appendChild(particle);
 
-            // Size: Random between 2px and 5px
             const size = Math.random() * 3 + 2; 
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             
-            // Center particle on cursor
             particle.style.left = `${x - size/2}px`;
             particle.style.top = `${y - size/2}px`;
 
-            // Random Jitter Destination
             const destX = (Math.random() - 0.5) * 50; 
             const destY = (Math.random() - 0.5) * 50;
 
-            // Animate
             const animation = particle.animate([
                 { 
                     transform: `translate(0px, 0px) scale(1)`, 
@@ -315,7 +302,7 @@
                     opacity: 0 
                 }
             ], {
-                duration: 400 + Math.random() * 400, // Random duration
+                duration: 400 + Math.random() * 400, 
                 easing: 'cubic-bezier(0, .9, .57, 1)' 
             });
 
@@ -324,7 +311,6 @@
             };
         }
 
-        // Add Hover Effects
         const interactiveElements = document.querySelectorAll('button, a');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
